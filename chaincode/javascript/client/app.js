@@ -4,8 +4,8 @@ var app = angular.module('application',['ngNotify']);
 var last_id = null;
 
 app.controller('appController', function($scope, appFactory, ngNotify) {
-    $scope.queryAllTuna = function() {
-        appFactory.queryAllTuna(function(data) {
+    $scope.queryAllData = function() {
+        appFactory.queryAllData(function(data) {
             var array = [];
             for (var i = 0; i<data.length; i++) {
                 // data[i].Record.Key = parseInt(data[i].Key);
@@ -22,8 +22,8 @@ app.controller('appController', function($scope, appFactory, ngNotify) {
             array.sort((a,b)=>{
                 return parseFloat(a.Key) - parseFloat(b.Key);
             });
-            $scope.all_tuna = array;
-            // last_id = $scope.all_tuna[$scope.all_tuna.length-1].Key;
+            $scope.all_data = array;
+            // last_id = $scope.all_data[$scope.all_data.length-1].Key;
 	    last_id = data.length+1;
 
             ngNotify.config({
@@ -38,16 +38,16 @@ app.controller('appController', function($scope, appFactory, ngNotify) {
 	    
             // ngNotify.set('This is the current default message type.');
 	    
-            console.log($scope.all_tuna);
+            console.log($scope.all_data);
         });
     }
-    $scope.recordTuna = function(){
-        appFactory.recordTuna($scope.tuna, function(response){
+    $scope.recordData = function(){
+        appFactory.recordData($scope.data, function(response){
             console.log("Response:"+JSON.stringify(response));
             let object = JSON.parse(JSON.stringify(response));
             
             if(object.status == 200) {
-                $scope.queryAllTuna();
+                $scope.queryAllData();
             } else if (object.status == 500) {
 	        $scope.doubleBooking();    
 	    }
@@ -55,19 +55,17 @@ app.controller('appController', function($scope, appFactory, ngNotify) {
     }
     $scope.changeHolder = function(data){
         // appFactory.changeHolder($scope.holder, function(response){
-        appFactory.changeHolder($scope.all_tuna[data-1], function(response){
+        appFactory.changeHolder($scope.all_data[data-1], function(response){
 	    console.log(data);
             console.log(JSON.stringify(response));
-            $scope.queryAllTuna();
+            $scope.queryAllData();
         })
     }
     $scope.doubleBooking = function(){
         ngNotify.set('既に予約済みです');
 
-	appFactory.doubleBooking($scope.holder, function(response){
-        console.log(JSON.stringify(response));
-	    
-        // $scope.queryAllTuna();	    
+	    appFactory.doubleBooking($scope.holder, function(response){
+        console.log(JSON.stringify(response));	    
         })
     }    
 });
@@ -75,8 +73,8 @@ app.controller('appController', function($scope, appFactory, ngNotify) {
 app.factory('appFactory', function($http) {
     var factory = {};
 
-    factory.queryAllTuna = function(callback, ngNotify) {
-        $http.get('/get_all_tuna').then( response => {
+    factory.queryAllData = function(callback, ngNotify) {
+        $http.get('/get_all_data').then( response => {
             callback(response.data);
             console.log(response);
 
@@ -88,15 +86,15 @@ app.factory('appFactory', function($http) {
         });
     }
 
-    factory.recordTuna = function(data, callback){
+    factory.recordData = function(data, callback){
         data.location = data.longtitude +", " + data.latitude;
         data.id = last_id+1;
         data.timestamp = (new Date(data.timestamp)).getTime() / 1000;
 
-        var tuna = data.id + "_" + data.location + "_" + data.timestamp + "_" + data.holder + "_" + data.vessel + "_" + data.AppraisedValue;
+        var data = data.id + "_" + data.location + "_" + data.timestamp + "_" + data.holder + "_" + data.vessel + "_" + data.AppraisedValue;
 
 	
-        $http.get("/add_tuna/"+tuna).then(response => {
+        $http.get("/add_data/"+data).then(response => {
             callback(response);
         }, err => {
             // エラーの時はメッセージを表示したい

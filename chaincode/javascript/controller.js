@@ -54,15 +54,10 @@ async function connectToNetwork(callback) {
 
 module.exports = (function() {
     return{
-        get_all_tuna: async function(req, res) {
+        get_all_data: async function(req, res) {
             console.log('getting all data from database.');
             connectToNetwork(async contract => {
                 try {
-                    // const result = await contract.submitTransaction('QueryAllTuna');
-
-                    // const result = await contract.submitTransaction('GetAllAssets');
-
-                    // debug
                     const result = await contract.evaluateTransaction('GetAllAssets');
                     console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
@@ -73,10 +68,10 @@ module.exports = (function() {
                 }
             }); 
         },
-        add_tuna: async function(req, res) {
+        add_data: async function(req, res) {
             connectToNetwork(async contract => {
                 try {
-                    var array       = req.params.tuna.split('_');
+                    var array       = req.params.data.split('_');
                     var id          = array[0];
                     var location    = array[1];
                     var timestamp   = array[2];

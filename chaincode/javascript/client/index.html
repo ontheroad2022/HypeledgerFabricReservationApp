@@ -11,10 +11,10 @@
     
 </head>
 <body ng-app="application" ng-controller="appController">
-    <div class="container" ng-init="queryAllTuna()" style="margin-top: 10px;">
+    <div class="container" ng-init="queryAllData()" style="margin-top: 10px;">
         <div class="col-sm-12 col-lg-12">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewTunaModal" style="margin-bottom: 10px;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewDataModal" style="margin-bottom: 10px;">
                 新規予約追加
             </button>
             
@@ -30,24 +30,24 @@
 		  <th>削除</th>		  
                 </tr>
         
-                <tr ng-repeat="tuna in all_tuna track by $index">
-                  <td>{{tuna.Key}}</td>
-                  <td>{{tuna.Timestamp*1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
-                  <td>{{tuna.Owner}}</td>
-                  <td>{{tuna.Location}}</td>
-                  <td>{{tuna.ID}}</td>
-                  <td>{{tuna.AppraisedValue}}</td>
+                <tr ng-repeat="data in all_data track by $index">
+                  <td>{{data.Key}}</td>
+                  <td>{{data.Timestamp*1000 | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td>{{data.Owner}}</td>
+                  <td>{{data.Location}}</td>
+                  <td>{{data.ID}}</td>
+                  <td>{{data.AppraisedValue}}</td>
                   <td><span class="btn btn-info" data-toggle="modal" data-target="#changeHolder" onclick="passIdToNgModel(this)"><i class="fa fa-edit"></i></span></td>
-                  <td><span class="btn btn-info" data-toggle="modal" data-target="#deleteWaypoint" ng-click="changeHolder(tuna.Key)"><i class="fa fa-edit"></i></span></td>		  
+                  <td><span class="btn btn-info" data-toggle="modal" data-target="#deleteWaypoint" ng-click="changeHolder(data.Key)"><i class="fa fa-edit"></i></span></td>		  
                 </tr>
             </table>
 	    
             <!-- Modal -->
-            <div class="modal fade" id="addNewTunaModal" tabindex="-1" role="dialog" aria-labelledby="addNewTunaModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addNewDataModal" tabindex="-1" role="dialog" aria-labelledby="addNewDataModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="addNewTunaModalLabel">新規予約追加</h5>
+                    <h5 class="modal-title" id="addNewDataModalLabel">新規予約追加</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -56,21 +56,21 @@
                         <form>
                             <div class="form-group">
                               <label for="inputVessel">ウェイポイント（離発着地点）</label>
-                              <input type="text" class="form-control" id="inputVessel" placeholder="Ex: 353F" ng-model="tuna.vessel">                         
+                              <input type="text" class="form-control" id="inputVessel" placeholder="Ex: 353F" ng-model="data.vessel">                         
                             </div>
                             <div class="form-group">
                                 <label for="inputLongtitude">経度</label>
-                                <input type="text" class="form-control" id="inputLongtitude" placeholder="Ex: 34.4443" ng-model="tuna.longtitude">
+                                <input type="text" class="form-control" id="inputLongtitude" placeholder="Ex: 34.4443" ng-model="data.longtitude">
                             </div>
                             <div class="form-group">
                                 <label for="inputLatitude">緯度</label>
-                                <input type="text" class="form-control" id="inputLatitude" placeholder="Ex: -67.4443" ng-model="tuna.latitude">
+                                <input type="text" class="form-control" id="inputLatitude" placeholder="Ex: -67.4443" ng-model="data.latitude">
                             </div>
                             <div class="form-group">
                                 <label for="inputDatetime">日付時刻</label>
                                 <div class='input-group date' id='datetimepicker1'>
-                                    <input type='text' class="form-control" placeholder="日付と時刻を選択" ng-model="tuna.timestamp"/>
-                                    <input type="text" id="tuna_dt" name="inputHiddenfordatetime" ng-model="tuna.timestamp" style="display: none;">
+                                    <input type='text' class="form-control" placeholder="日付と時刻を選択" ng-model="data.timestamp"/>
+                                    <input type="text" id="data_dt" name="inputHiddenfordatetime" ng-model="data.timestamp" style="display: none;">
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -78,24 +78,24 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputHolder">機体</label>
-                                <input type="text" class="form-control" id="inputHolder" placeholder="機体名を入力" ng-model="tuna.holder"/>
+                                <input type="text" class="form-control" id="inputHolder" placeholder="機体名を入力" ng-model="data.holder"/>
                             </div>
                             <div class="form-group">
                                 <label for="inputHolder">評価価値</label>
-                                <input type="text" class="form-control" id="inputHolder" placeholder="評価価値を入力" ng-model="tuna.AppraisedValue"/>
+                                <input type="text" class="form-control" id="inputHolder" placeholder="評価価値を入力" ng-model="data.AppraisedValue"/>
                             </div>
 			</form>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">閉じる</button>
-                    <button type="button" class="btn btn-success" ng-click="recordTuna()" data-dismiss="modal">予約する</button>
+                    <button type="button" class="btn btn-success" ng-click="recordData()" data-dismiss="modal">予約する</button>
                     </div>
                 </div>
                 </div>
             </div>
 
             <!-- Modal for change holder-->
-            <div class="modal fade" id="changeHolder" tabindex="-1" role="dialog" aria-labelledby="addNewTunaModalLabel" aria-hidden="true">
+            <div class="modal fade" id="changeHolder" tabindex="-1" role="dialog" aria-labelledby="addNewDataModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -122,7 +122,7 @@
             </div>
 
             <!-- Modal for double booking-->
-            <div class="modal fade" id="doubleBooking" tabindex="-1" role="dialog" aria-labelledby="addNewTunaModalLabel" aria-hidden="true">
+            <div class="modal fade" id="doubleBooking" tabindex="-1" role="dialog" aria-labelledby="addNewDataModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -164,8 +164,8 @@
             $('#datetimepicker1').datetimepicker()
                 .on('dp.change', function(e){
                     if(e.date){
-                        $("#tuna_dt").text(e.date.format());
-                        $("#tuna_dt").trigger('change',null);
+                        $("#data_dt").text(e.date.format());
+                        $("#data_dt").trigger('change',null);
                     }
                 })
         });
