@@ -47,4 +47,52 @@ $ node server.js
 ```
 ---
 
+<pre>
+
+.
+├── README.md
+├── asset-reserve
+│   ├── networkDown.sh
+│   ├── startFabric.sh
+│   └── wallet
+│       ├── admin.id
+│       └── appUser.id
+├── bin
+│   ├── configtxgen
+│   ├── configtxlator
+│   ├── cryptogen
+│   ├── discover
+│   ├── fabric-ca-client
+│   ├── fabric-ca-server
+│   ├── ledgerutil
+│   ├── orderer
+│   ├── osnadmin
+│   └── peer
+├── chaincode
+│   └── javascript
+│       ├── client
+│       │   ├── app.js
+│       │   └── index.html
+│       ├── composite.js
+│       ├── controller.js
+│       ├── enrollAdmin.js
+│       ├── index.js
+│       ├── invoke.js
+│       ├── lib
+│       │   └── assetTransfer.js
+│       ├── package-lock.json
+│       ├── package.json
+│       ├── query.js
+│       ├── registerUser.js
+│       ├── reserve.js
+│       ├── routes.js
+│       └── server.js
+├── config
+│   ├── configtx.yaml
+│   ├── core.yaml
+│   └── orderer.yaml
+└── test-network
+
+</pre>
+
 # HyperledgerFabricReservationApp
