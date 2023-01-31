@@ -10,35 +10,35 @@
 ```
 $ docker rm -f $(docker ps -aq)
 ```
----
+
 必要なライブラリをインストールします
 
 ```
 $ cd chaincode/javascript/
 $ npm install
 ```
----
+
 次のコマンドを実行して Hyperledger Fabric ネットワークを開始します
 
 ```
 $ cd asset-reserve/
 $ ./startFabric.sh
 ```
----
+
 ネットワークの管理コンポーネントを登録します
 
 ```
 $ cd chaincode/javascript/
 $ node enrollAdmin.js
 ```
----
+
 ネットワークのユーザーコンポーネントを登録します
 
 ```
 $ cd chaincode/javascript/
 $ node registerUser.js
 ```
----
+
 サーバを起動します。
 
 ```
